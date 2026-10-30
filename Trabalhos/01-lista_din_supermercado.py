@@ -168,7 +168,31 @@ class ListaDinamicaEncadeada():
         else:
             self.produto = deepcopy(posAnt._prox.produto)
 
-        return True    
+        return True   
+
+    def atualizar(self, produto: Produto) -> int:
+        if self.vazia():
+            self._opSt = LISTA_VAZIA
+            return self._opSt
+
+        posAnt = self._buscarProduto(produto.nome)
+
+        if self._opSt == ITEM_INEXISTENTE:
+            return self._opSt
+
+        if posAnt == None:
+            aux = self._inicio.produto
+        else:
+            aux = posAnt._prox
+
+        aux.produto.tipo = produto.tipo
+        aux.produto.estoque = produto.estoque
+        aux.produto.vendido = produto.vendido
+        aux.produto.custo = produto.custo
+        aux.produto.venda = produto.venda
+
+        return ITEM_EXISTENTE
+
 
     def reinicia(self) -> None:
         self.produto = None
