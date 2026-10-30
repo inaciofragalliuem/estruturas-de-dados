@@ -286,5 +286,111 @@ class ListaDinamicaEncadeada():
         print(f"Valor total bruto: R$ {totalBruto:.2f}")
         print(f"Valor total líquido: R$ {totalLiquido:.2f}")
 
-if __name__ == '__main__':
-    
+
+def main():    
+    lista = ListaDinamicaEncadeada()
+
+    while True:
+        print("\n===== CONTROLE DE ESTOQUE =====")
+        print("1 - Inserir produto")
+        print("2 - Remover produto")
+        print("3 - Atualizar produto")
+        print("4 - Relatórios de estoque")
+        print("5 - Relatório de vendas")
+        print("6 - Reajuste percentual")
+        print("7 - Reiniciar vendas")
+        print("0 - Sair")
+
+        opcao = int(input("Escolha uma opção: "))
+
+        match opcao:
+            case 1:
+                nome = input("Nome do produto: ")
+                tipo = escolherTipo()
+                estoque = input("Quantidade em estoque: ")
+                vendido = input("Quantidade vendida: ")
+                custo = input("Valor de custo: R$")
+                venda = input("Valor de venda: R$")
+                
+
+            case 2:
+                pass  # Remover produto
+
+            case 3:
+                pass  # Atualizar produto
+
+            case 4:
+                print("\n===== RELATÓRIOS DE ESTOQUE =====")
+                print("1 - Completo (todos)")
+                print("2 - Completo (por tipo)")
+                print("3 - Produtos em estoque")
+                print("4 - Produtos esgotados")
+                print("5 - Produtos com estoque baixo")
+
+                relatorio = input("Escolha o relatório: ")
+
+                match relatorio:
+                    case 1:
+                        lista.relatorioEstoqueCompleto()
+
+                    case 2:
+                        tipo = int(input("Tipo do produto (1-10): "))
+                        lista.relatorioEstoqueCompleto(tipo)
+
+                    case 3:
+                        lista.relatorioProdutosEmEstoque()
+
+                    case 4:
+                        lista.relatorioProdutosEsgotados()
+
+                    case 5:
+                        lista.relatorioEstoqueBaixo()
+
+                    case _:
+                        print("Opção inválida!")
+
+            case 5:
+                lista.relatorioVendas()
+
+            case 6:
+                pass  # Reajuste percentual
+
+            case 7:
+                pass  # Reiniciar vendas
+
+            case 0:
+                print("Encerrando...")
+                break
+
+            case _:
+                print("Opção inválida!")
+
+
+def escolherTipo() -> int:
+    print("\n===== TIPOS DE PRODUTO =====")
+    print("1 - Açougue")
+    print("2 - Padaria")
+    print("3 - Frios e Laticínios")
+    print("4 - Higiene Corporal")
+    print("5 - Limpeza da Casa")
+    print("6 - Hortifruti")
+    print("7 - Grãos, Farináceos e Café")
+    print("8 - Bebidas")
+    print("9 - Utensílios")
+    print("10 - Diversos")
+
+    while True:
+        try:
+            tipo = int(input("Escolha o tipo (1-10): "))
+
+            if 1 <= tipo <= 10:
+                return tipo
+
+            print("Tipo inválido! Escolha entre 1 e 10.")
+
+        except ValueError:
+            print("Digite um número válido!")
+
+
+if __name__ == "__main__":
+    main()
