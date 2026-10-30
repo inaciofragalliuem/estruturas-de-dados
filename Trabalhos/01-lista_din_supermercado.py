@@ -200,5 +200,91 @@ class ListaDinamicaEncadeada():
         self._opSt = LISTA_VAZIA
         self._inicio = None
 
+    def relatorioEstoqueCompleto(self, tipo: int | None = None) -> None:
+        pos = self._inicio
+
+        while pos != None:
+            produto = pos.produto
+
+            if tipo == None or produto.tipo == tipo:
+                nomeTipo = self._nomeTipo(produto.tipo)
+
+                print(f"Nome: {produto.nome}")
+                print(f"Tipo: {nomeTipo}")
+                print(f"Quantidade em estoque: {produto.estoque}")
+                print(f"Quantidade vendida: {produto.vendido}")
+                print(f"Valor de custo: R$ {produto.custo:.2f}")
+                print(f"Valor de venda: R$ {produto.venda:.2f}")
+                print("-" * 40)
+
+            pos = pos._prox
+
+    
+    def relatorioProdutosEmEstoque(self) -> None:
+        pos = self._inicio
+
+        while pos != None:
+            produto = pos.produto
+
+            if produto.estoque > 0:
+                print(f"Nome: {produto.nome}")
+                print(f"Tipo: {self._nomeTipo(produto.tipo)}")
+                print(f"Quantidade em estoque: {produto.estoque}")
+                print("-" * 40)
+
+            pos = pos._prox
+
+
+    def relatorioProdutosEsgotados(self) -> None:
+        pos = self._inicio
+
+        while pos != None:
+            produto = pos.produto
+
+            if produto.estoque == 0:
+                print(f"Nome: {produto.nome}")
+                print(f"Tipo: {self._nomeTipo(produto.tipo)}")
+                print("Produto esgotado!")
+                print("-" * 40)
+
+            pos = pos._prox
+
+    
+    def relatorioEstoqueBaixo(self, limite: int = 10) -> None:
+        pos = self._inicio
+
+        while pos != None:
+            produto = pos.produto
+
+            if 0 < produto.estoque < limite:
+                print(f"Nome: {produto.nome}")
+                print(f"Tipo: {self._nomeTipo(produto.tipo)}")
+                print(f"Quantidade em estoque: {produto.estoque}")
+                print("-" * 40)
+
+            pos = pos._prox
+
+    
+    def relatorioVendas(self) -> None:
+        pos = self._inicio
+
+        totalVendido = 0
+        totalBruto = 0.0
+        totalLiquido = 0.0
+
+        while pos != None:
+            produto = pos.produto
+
+            totalVendido += produto.vendido
+            totalBruto += produto.vendido * produto.venda
+            totalLiquido += produto.vendido * (produto.venda - produto.custo)
+
+            pos = pos._prox
+
+        print("===== RELATÓRIO DE VENDAS =====")
+        print(f"Quantidade total vendida: {totalVendido}")
+        print(f"Valor total bruto: R$ {totalBruto:.2f}")
+        print(f"Valor total líquido: R$ {totalLiquido:.2f}")
+
 if __name__ == '__main__':
     
