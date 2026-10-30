@@ -120,6 +120,20 @@ class ListaDinamicaEncadeada():
 
         return True
 
+    def _nomeTipo(self, tipo: int) -> str:
+        match tipo:
+            case 1: return "Açougue"
+            case 2: return "Padaria"
+            case 3: return "Frios e Laticínios"
+            case 4: return "Higiene Corporal"
+            case 5: return "Limpeza da Casa"
+            case 6: return "Hortifruti"
+            case 7: return "Grãos, Farináceos e Café"
+            case 8: return "Bebidas"
+            case 9: return "Utensílios"
+            case 10: return "Diversos"
+            case _: return "Tipo desconhecido"
+
     def mostrar(self) -> None:
         if self.vazia():
             self._opSt = LISTA_VAZIA
@@ -129,20 +143,7 @@ class ListaDinamicaEncadeada():
         pos = self._inicio
         while pos != None:
             produto = pos.produto
-            tipo = ""
-    
-            match produto.tipo:
-                case 1: tipo = "Açougue"
-                case 2: tipo = "Padaria"
-                case 3: tipo = "Frios e Laticínios"
-                case 4: tipo = "Higiene Corporal"
-                case 5: tipo = "Limpeza da Casa"
-                case 6: tipo = "Hortifruti"
-                case 7: tipo = "Grãos, Farináceos e Café"
-                case 8: tipo = "Bebidas"
-                case 9: tipo = "Utensílios"
-                case 10: tipo = "Diversos"
-                case _: tipo = "Tipo desconhecido"
+            tipo = self._nomeTipo(produto.tipo)
 
             print(f"Nome: {produto.nome}")
             print(f"Tipo: {tipo}")
