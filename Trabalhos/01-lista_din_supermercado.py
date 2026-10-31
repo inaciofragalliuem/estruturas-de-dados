@@ -286,8 +286,62 @@ class ListaDinamicaEncadeada():
         print(f"Valor total bruto: R$ {totalBruto:.2f}")
         print(f"Valor total líquido: R$ {totalLiquido:.2f}")
 
+    
+    def reajustePercentual(self, percentual: float) -> None:
+        pos = self._inicio
 
-def main():    
+        while pos != None:
+            produto = pos.produto
+            produto.venda *= 1 + percentual / 100
+
+            pos = pos._prox
+
+
+    def reiniciarVendas(self) -> None:
+        pos = self._inicio
+
+        while pos != None:
+            pos.produto.vendido = 0
+            pos = pos._prox
+
+
+def lerNumero(tipo=int) -> int | float:
+    while True:
+        try:
+            numero = tipo(input("Digite um número: "))
+
+            if numero >= 0:
+                return numero
+
+            print("O número não pode ser negativo!")
+
+        except ValueError:
+            print("Digite um número válido!")
+
+
+def lerProduto() -> Produto:
+    nome = input("Nome do produto: ").strip()
+
+    while not nome:
+        nome = input("Informe um nome válido: ").strip()
+
+    tipo = escolherTipo()
+
+    print("Quantidade em estoque:")
+    estoque = lerNumero()
+
+    print("Quantidade vendida:")
+    vendido = lerNumero()
+
+    print("Valor de custo:")
+    custo = lerNumero(float)
+
+    print("Valor de venda:")
+    venda = lerNumero(float)
+
+    return Produto(nome, tipo, estoque, vendido, custo, venda)
+
+def main():
     lista = ListaDinamicaEncadeada()
 
     while True:
@@ -301,62 +355,112 @@ def main():
         print("7 - Reiniciar vendas")
         print("0 - Sair")
 
-        opcao = int(input("Escolha uma opção: "))
+        try:
+            opcao = int(input("Escolha uma opção: "))
+        except ValueError:
+            print("Opção inválida!")
+            continue
 
         match opcao:
             case 1:
-                nome = input("Nome do produto: ")
-                tipo = escolherTipo()
-                estoque = input("Quantidade em estoque: ")
-                vendido = input("Quantidade vendida: ")
-                custo = input("Valor de custo: R$")
-                venda = input("Valor de venda: R$")
-                
+                print("\n===== INSERIR PRODUTO =====")
+                produto = lerProduto()
+
+                if lista.inserir(produto):
+                    print("Produto inserido com sucesso!")
+                else:
+                    print("Não foi possível inserir o produto!")
 
             case 2:
-                pass  # Remover produto
+                print("\n===== REMOVER PRODUTO =====")
+                nome = input("Nome do produto: ").strip()
+
+                if lista.remover(nome):
+                    print("Produto removido com sucesso!")
+                else:
+                    print("Produto não encontrado!")
 
             case 3:
-                pass  # Atualizar produto
+                print("\n===== ATUALIZAR PRODUTO =====")
+                print("Informe o nome do produto e os novos dados.")
+                produto = lerProduto()
+
+                atualizado = lista.atualizar(produto)
+                if atualizado != ITEM_INEXISTENTE or atualizado != LISTA_VAZIA:
+                    print("Produto atualizado com sucesso!")
+                else:
+                    print("Produto não encontrado!")
 
             case 4:
-                print("\n===== RELATÓRIOS DE ESTOQUE =====")
-                print("1 - Completo (todos)")
-                print("2 - Completo (por tipo)")
-                print("3 - Produtos em estoque")
-                print("4 - Produtos esgotados")
-                print("5 - Produtos com estoque baixo")
+                while True:
+                    print("\n===== RELATÓRIOS DE ESTOQUE =====")
+                    print("1 - Completo (todos)")
+                    print("2 - Completo (por tipo)")
+                    print("3 - Produtos em estoque")
+                    print("4 - Produtos esgotados")
+                    print("5 - Produtos com estoque baixo")
+                    print("0 - Voltar")
 
-                relatorio = input("Escolha o relatório: ")
-
-                match relatorio:
-                    case 1:
-                        lista.relatorioEstoqueCompleto()
-
-                    case 2:
-                        tipo = int(input("Tipo do produto (1-10): "))
-                        lista.relatorioEstoqueCompleto(tipo)
-
-                    case 3:
-                        lista.relatorioProdutosEmEstoque()
-
-                    case 4:
-                        lista.relatorioProdutosEsgotados()
-
-                    case 5:
-                        lista.relatorioEstoqueBaixo()
-
-                    case _:
+                    try:
+                        relatorio = int(input("Escolha o relatório: "))
+                    except ValueError:
                         print("Opção inválida!")
+                        continue
+
+                    match relatorio:
+                        case 1:
+                            lista.relatorioEstoqueCompleto()
+
+                        case 2:
+                            tipo = escolherTipo()
+                            lista.relatorioEstoqueCompleto(tipo)
+
+                        case 3:
+                            lista.relatorioProdutosEmEstoque()
+
+                        case 4:
+                            lista.relatorioProdutosEsgotados()
+
+                        case 5:
+                            lista.relatorioEstoqueBaixo()
+
+                        case 0:
+                            break
+
+                        case _:
+                            print("Opção inválida!")
 
             case 5:
+                print("\n===== RELATÓRIO DE VENDAS =====")
                 lista.relatorioVendas()
 
             case 6:
-                pass  # Reajuste percentual
+                print("\n===== REAJUSTE PERCENTUAL =====")
+
+                try:
+                    percentual = float(input("Percentual de reajuste: ").replace(",", "."))
+
+                    if percentual < -100:
+                        print("O reajuste não pode ser inferior a -100%!")
+                        continue
+
+                    lista.reajustePercentual(percentual)
+                    print("Preços reajustados com sucesso!")
+
+                except ValueError:
+                    print("Percentual inválido!")
 
             case 7:
-                pass  # Reiniciar vendas
+                print("\n===== REINICIAR VENDAS =====")
+                confirmacao = input(
+                    "Deseja zerar todas as quantidades vendidas? (s/n): "
+                ).strip().lower()
+
+                if confirmacao == "s":
+                    lista.reiniciarVendas()
+                    print("Vendas reiniciadas com sucesso!")
+                else:
+                    print("Operação cancelada!")
 
             case 0:
                 print("Encerrando...")
@@ -364,7 +468,6 @@ def main():
 
             case _:
                 print("Opção inválida!")
-
 
 def escolherTipo() -> int:
     print("\n===== TIPOS DE PRODUTO =====")
