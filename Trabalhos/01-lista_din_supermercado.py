@@ -53,7 +53,7 @@ class ListaDinamicaEncadeada():
 
     def _buscarProduto(self, nome: str) -> TipoNo:
         if self.vazia():
-            self._opSt = LISTA_VAZIA
+            self._opSt = ITEM_INEXISTENTE
             return None
 
         posAnt: TipoNo | None = None
@@ -74,19 +74,19 @@ class ListaDinamicaEncadeada():
         else:
             self._opSt = ITEM_EXISTENTE
 
-        return True
+        return posAnt
 
     def inserir(self, produto: Produto) -> bool:
-        if self.vazia():
-            self._opSt = LISTA_VAZIA
+        if self.cheia():
+            self._opSt = LISTA_CHEIA
             return False
 
         posAnt: TipoNo = self._buscarProduto(produto.nome)
 
-        if self._opSt == ITEM_INEXISTENTE:
+        if self._opSt == ITEM_EXISTENTE:
             return False
 
-        posLivre: TipoNo = posAnt._prox
+        posLivre: TipoNo = TipoNo()
         posLivre.produto = deepcopy(produto)
 
         if posAnt == None:
@@ -160,7 +160,7 @@ class ListaDinamicaEncadeada():
         posAnt = self._buscarProduto(nome)
 
         if self._opSt == ITEM_INEXISTENTE:
-            self.item = None
+            self.produto = None
             return False
 
         if posAnt == None:
@@ -181,7 +181,7 @@ class ListaDinamicaEncadeada():
             return self._opSt
 
         if posAnt == None:
-            aux = self._inicio.produto
+            aux = self._inicio
         else:
             aux = posAnt._prox
 
