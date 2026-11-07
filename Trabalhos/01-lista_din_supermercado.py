@@ -35,7 +35,7 @@ class TipoNo:
 class ListaDinamicaEncadeada():
     def __init__(self):
         self.produto: Produto | None = None
-        self._nItens = 0
+        self._nProdutos = 0
         self._opSt = LISTA_VAZIA
         self._inicio: TipoNo | None = None
 
@@ -49,7 +49,7 @@ class ListaDinamicaEncadeada():
         return self._opSt
 
     def totalItens(self) -> int:
-        return self._nItens
+        return self._nProdutos
 
     def _buscarProduto(self, nome: str) -> TipoNo:
         if self.vazia():
@@ -96,7 +96,7 @@ class ListaDinamicaEncadeada():
             posLivre._prox = posAnt._prox
             posAnt._prox = posLivre
 
-        self._nItens += 1
+        self._nProdutos += 1
 
         return True
 
@@ -116,7 +116,7 @@ class ListaDinamicaEncadeada():
 
         self.produto = deepcopy(aux.produto)
         aux._prox = None
-        self._nItens -= 1
+        self._nProdutos -= 1
 
         return True
 
@@ -193,10 +193,9 @@ class ListaDinamicaEncadeada():
 
         return ITEM_EXISTENTE
 
-
     def reinicia(self) -> None:
         self.produto = None
-        self._nItens = 0
+        self._nProdutos = 0
         self._opSt = LISTA_VAZIA
         self._inicio = None
 
@@ -219,7 +218,7 @@ class ListaDinamicaEncadeada():
 
             pos = pos._prox
 
-    
+
     def relatorioProdutosEmEstoque(self) -> None:
         pos = self._inicio
 
@@ -233,7 +232,6 @@ class ListaDinamicaEncadeada():
                 print("-" * 40)
 
             pos = pos._prox
-
 
     def relatorioProdutosEsgotados(self) -> None:
         pos = self._inicio
