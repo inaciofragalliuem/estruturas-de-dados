@@ -337,6 +337,31 @@ def lerProduto() -> Produto:
 
     return Produto(nome, tipo, estoque, vendido, custo, venda)
 
+def escolherTipo() -> int:
+    print("\n===== TIPOS DE PRODUTO =====")
+    print("1 - Açougue")
+    print("2 - Padaria")
+    print("3 - Frios e Laticínios")
+    print("4 - Higiene Corporal")
+    print("5 - Limpeza da Casa")
+    print("6 - Hortifruti")
+    print("7 - Grãos, Farináceos e Café")
+    print("8 - Bebidas")
+    print("9 - Utensílios")
+    print("10 - Diversos")
+
+    while True:
+        try:
+            tipo = int(input("Escolha o tipo (1-10): "))
+
+            if 1 <= tipo <= 10:
+                return tipo
+
+            print("Tipo inválido! Escolha entre 1 e 10.")
+
+        except ValueError:
+            print("Digite um número válido!")
+
 def main():
     lista = ListaDinamicaEncadeada()
 
@@ -463,32 +488,6 @@ def main():
 
             case _:
                 print("Opção inválida!")
-
-def escolherTipo() -> int:
-    print("\n===== TIPOS DE PRODUTO =====")
-    print("1 - Açougue")
-    print("2 - Padaria")
-    print("3 - Frios e Laticínios")
-    print("4 - Higiene Corporal")
-    print("5 - Limpeza da Casa")
-    print("6 - Hortifruti")
-    print("7 - Grãos, Farináceos e Café")
-    print("8 - Bebidas")
-    print("9 - Utensílios")
-    print("10 - Diversos")
-
-    while True:
-        try:
-            tipo = int(input("Escolha o tipo (1-10): "))
-
-            if 1 <= tipo <= 10:
-                return tipo
-
-            print("Tipo inválido! Escolha entre 1 e 10.")
-
-        except ValueError:
-            print("Digite um número válido!")
-
 
 if __name__ == "__main__":
     main()
