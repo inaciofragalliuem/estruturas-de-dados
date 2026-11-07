@@ -281,7 +281,6 @@ class ListaDinamicaEncadeada():
 
             pos = pos._prox
 
-        print("===== RELATÓRIO DE VENDAS =====")
         print(f"Quantidade total vendida: {totalVendido}")
         print(f"Valor total bruto: R$ {totalBruto:.2f}")
         print(f"Valor total líquido: R$ {totalLiquido:.2f}")
@@ -305,7 +304,7 @@ class ListaDinamicaEncadeada():
             pos = pos._prox
 
 
-def lerNumero(tipo=int) -> int | float:
+def lerNumero(tipo = int):
     while True:
         try:
             numero = tipo(input("Digite um número: "))
@@ -317,7 +316,6 @@ def lerNumero(tipo=int) -> int | float:
 
         except ValueError:
             print("Digite um número válido!")
-
 
 def lerProduto() -> Produto:
     nome = input("Nome do produto: ").strip()
@@ -403,6 +401,7 @@ def main():
 
                     try:
                         relatorio = int(input("Escolha o relatório: "))
+                        print()
                     except ValueError:
                         print("Opção inválida!")
                         continue
@@ -452,9 +451,7 @@ def main():
 
             case 7:
                 print("\n===== REINICIAR VENDAS =====")
-                confirmacao = input(
-                    "Deseja zerar todas as quantidades vendidas? (s/n): "
-                ).strip().lower()
+                confirmacao = input("Deseja zerar todas as quantidades vendidas? (s/n): ").lower()
 
                 if confirmacao == "s":
                     lista.reiniciarVendas()
