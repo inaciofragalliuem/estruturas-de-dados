@@ -407,7 +407,7 @@ def main():
                 produto = lerProduto()
 
                 atualizado = lista.atualizar(produto)
-                if atualizado != ITEM_INEXISTENTE or atualizado != LISTA_VAZIA:
+                if atualizado == ITEM_EXISTENTE:
                     print("Produto atualizado com sucesso!")
                 else:
                     print("Produto não encontrado!")
